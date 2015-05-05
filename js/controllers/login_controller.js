@@ -1,17 +1,17 @@
-kot.controller('loginCtrl', ['$scope', 'kotAlertService', '$compile', function(scope, kotAlertService, compile) {
-	// var template = compile('<div class="alert_overLayer">' +
-	// 					'<div class="alert_box">' +
-	// 						'<div class="alert_container">' +
-	// 							'<div class="alert_mesg">' +
-	// 								'<p>Alert Message</p>' +
-	// 							'</div>' +
-	// 							'<div class="alert_button">' +
-	// 								'<button>OK</button>' +
-	// 							'</div>' +
-	// 						'</div>' +
-	// 					'</div>' +
-	// 				'</div>');
-	scope.alert = function() {
-		kotAlertService.alert('hiiii');
+kot.controller('loginCtrl', ['$scope', 'kotAlertService', 'kotValidateService', '$compile', function(scope, kotAlertService, kotValidateService, compile) {
+	scope.login = {userName: '', password: ''};
+	scope.loginValidation = function(loginValues) {
+		// kotAlertService.alert('Hai this anand im working with KOT project');
+		var errorList = kotValidateService.fieldValidate(loginValues) || '';
+		if (errorList !== '') {
+			kotAlertService.alert(errorList);
+			return;
+		}
+		errorList = kotValidateService.loginValidate(loginValues) || '';
+		if (errorList !== '') {
+			kotAlertService.alert(errorList);
+			return;
+		}
+		kotAlertService.alert('Welcome ' + loginValues.userName);
 	};
 }]);
